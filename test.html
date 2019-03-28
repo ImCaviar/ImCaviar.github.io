@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body onload="draw()">
+<p>HELLO WORLD!</p><br/><br/><br/><br/><br/>
+<canvas height='300' width='400' id="tutorial"></canvas>
+<textarea id="test" style="height: 300px; width: 500px; overflow: hidden"></textarea>
+<div style="width: 1600px">
+    <canvas id="myChart"></canvas>
+</div>
+<a onclick="clickDownload(this)" download="audiofingerprint.csv" href="#">download</a>
+<script type="text/javascript" src="audio-fingerprinting.js"></script>
+<script type="text/javascript" src="canvas.js"></script>
+<script>
+    function get_text_dimensions(font) {
+        h = document.getElementsByTagName("body")[0];
+        d = document.createElement("div");
+        s = document.createElement("span");
+
+        d.appendChild(s);
+        d.style.fontFamily = font;
+        s.style.fontFamily = font;
+        s.style.fontSize = "72px";
+        s.innerHTML = "font_detection";
+        h.appendChild(d);
+
+        var textWidth = s.offsetWidth;
+        var textHeight = s.offsetHeight;
+        //h.removeChild(d);//隐藏测试字体
+
+        return [textWidth, textHeight];
+    }
+
+    //测试默认字体
+    function judge_font(){
+        var rootFontFamily = (document.documentElement.currentStyle ? document.documentElement.currentStyle : window.getComputedStyle(document.documentElement)).fontFamily;
+        var fontsize = rootFontFamily + ":" + get_text_dimensions(rootFontFamily);
+        return fontsize;
+    }
+
+    var audiofp = null;
+
+    function clickDownload(aLink){
+        audioFingerprint.outputcsv(aLink);
+    }
+
+    audioFingerprint.run(function (fp) {
+       audiofp = fp;
+        document.getElementById('test').value = audiofp;
+    });
+
+</script>
+</body>
+</html>
