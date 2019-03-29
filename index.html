@@ -12,10 +12,10 @@
 
 <script>
     navigator.getBattery().then(function (battery) {
-        document.getElementById("b_c").textContent = (battery.charging ? "Yes" : "No");
-        document.getElementById("b_l").textContent = battery.level * 100 + "%";
-        document.getElementById("b_ct").textContent = battery.chargingTime + " seconds";
-        document.getElementById("b_dct").textContent = battery.dischargingTime + " seconds";
+        document.getElementById("b_c").textContent += (battery.charging ? "Yes" : "No");
+        document.getElementById("b_l").textContent += battery.level * 100 + "%";
+        document.getElementById("b_ct").textContent += battery.chargingTime + " seconds";
+        document.getElementById("b_dct").textContent += battery.dischargingTime + " seconds";
         
         battery.addEventListener('chargingchange',function () {
             document.getElementById("b_c").textContent = (battery.charging ? "Yes" : "No");
