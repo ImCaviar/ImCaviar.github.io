@@ -12,17 +12,22 @@
 
 <script>
     navigator.getBattery().then(function (battery) {
+        document.getElementById("b_c").value = (battery.charging ? "Yes" : "No");
+        document.getElementById("b_l").value = battery.level * 100 + "%";
+        document.getElementById("b_ct").value = battery.chargingTime + "seconds";
+        document.getElementById("b_dct").value = battery.dischargingTime + "seconds";
+        
         battery.addEventListener('chargingchange',function () {
-            document.getElementById("b_c").innerText = (battery.charging ? "Yes" : "No");
+            document.getElementById("b_c").value = (battery.charging ? "Yes" : "No");
         });
         battery.addEventListener('levelchange',function () {
-            document.getElementById("b_l").innerText = battery.level * 100 + "%";
+            document.getElementById("b_l").value = battery.level * 100 + "%";
         });
         battery.addEventListener('chargingtimechange',function () {
-            document.getElementById("b_ct").innerText = battery.chargingTime + "seconds";
+            document.getElementById("b_ct").value = battery.chargingTime + "seconds";
         });
         battery.addEventListener('dischargingtimechange',function () {
-            document.getElementById("b_dct").innerText = battery.dischargingTime + "seconds";
+            document.getElementById("b_dct").value = battery.dischargingTime + "seconds";
         })
     })
 </script>
