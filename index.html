@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+</head>
+<body>
+<a id="b_c">battery charging?</a><br>
+<a id="b_l">battery level:</a><br>
+<a id="b_ct">battery charging time:</a><br>
+<a id="b_dct">battery discharging time:</a>
+
+<script>
+    navigator.getBattery().then(function (battery) {
+        battery.addEventListener('chargingchange',function () {
+            document.getElementById("b_c").innerText = (battery.charging ? "Yes" : "No");
+        });
+        battery.addEventListener('levelchange',function () {
+            document.getElementById("b_l").innerText = battery.level * 100 + "%";
+        });
+        battery.addEventListener('chargingtimechange',function () {
+            document.getElementById("b_ct").innerText = battery.chargingTime + "seconds";
+        });
+        battery.addEventListener('dischargingtimechange',function () {
+            document.getElementById("b_dct").innerText = battery.dischargingTime + "seconds";
+        })
+    })
+</script>
+</body>
+</html>
