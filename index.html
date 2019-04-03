@@ -2,34 +2,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Test</title>
+    <title>Title</title>
 </head>
-<body>
-<a id="b_c">battery charging?</a></br>
-<a id="b_l">battery level:</a></br>
-<a id="b_ct">battery charging time:</a></br>
-<a id="b_dct">battery discharging time:</a>
-
+<body onload="draw()">
+<p>HELLO WORLD!</p><br/><br/><br/><br/><br/>
+<canvas height='300' width='400' id="tutorial"></canvas>
+<textarea id="test" style="height: 300px; width: 500px; overflow: hidden"></textarea>
+<div style="width: 1600px">
+    <canvas id="myChart"></canvas>
+</div>
+<!--a onclick="clickDownload(this)" download="audiofingerprint.csv" href="#">download</a -->
+<script type="text/javascript" src="audio-fingerprinting.js"></script>
+<script type="text/javascript" src="canvas.js"></script>
 <script>
-    navigator.getBattery().then(function (battery) {
-        document.getElementById("b_c").textContent = "battery charging?" + (battery.charging ? "Yes" : "No");
-        document.getElementById("b_l").textContent = "battery level:" + battery.level * 100 + "%";
-        document.getElementById("b_ct").textContent = "battery charging time:" + battery.chargingTime + " seconds";
-        document.getElementById("b_dct").textContent = "battery discharging time:" + battery.dischargingTime + " seconds";
-        
-        battery.addEventListener('chargingchange',function () {
-            document.getElementById("b_c").textContent = "battery charging?" + (battery.charging ? "Yes" : "No");
-        });
-        battery.addEventListener('levelchange',function () {
-            document.getElementById("b_l").textContent = "battery level:" + battery.level * 100 + "%";
-        });
-        battery.addEventListener('chargingtimechange',function () {
-            document.getElementById("b_ct").textContent = "battery charging time:" + battery.chargingTime + " seconds";
-        });
-        battery.addEventListener('dischargingtimechange',function () {
-            document.getElementById("b_dct").textContent = "battery discharging time:" + battery.dischargingTime + " seconds";
-        })
-    })
+    function get_text_dimensions(font) {
+        h = document.getElementsByTagName("body")[0];
+        d = document.createElement("div");
+        s = document.createElement("span");
+
+        d.appendChild(s);
+        d.style.fontFamily = font;
+        s.style.fontFamily = font;
+        s.style.fontSize = "72px";
+        s.innerHTML = "font_detection";
+        h.appendChild(d);
+
+        var textWidth = s.offsetWidth;
+        var textHeight = s.offsetHeight;
+        //h.removeChild(d);//隐藏测试字体
+
+        return [textWidth, textHeight];
+    }
+
+    //测试默认字体
+    function judge_font(){
+        var rootFontFamily = (document.documentElement.currentStyle ? document.documentElement.currentStyle : window.getComputedStyle(document.documentElement)).fontFamily;
+        var fontsize = rootFontFamily + ":" + get_text_dimensions(rootFontFamily);
+        return fontsize;
+    }
+
+    //测试音频指纹
+    var audiofp = null;
+
+    //function clickDownload(aLink){
+    //    audioFingerprint.outputcsv(aLink);
+    //}
+
+    audioFingerprint.run(function (fp) {
+       audiofp = fp;
+       //document.getElementById('test').value = audiofp;
+    });
+
+    //测试加速度计
+    function orientation(){
+        var deviceOrientationData = null;
+        window.addEventListener('deviceorientation',function (event) {
+            deviceOrientationData = event;
+        },false);
+        var x = deviceOrientationData.accelerationIncludingGravity.x;
+        var y = deviceOrientationData.accelerationIncludingGravity.y;
+        var z = deviceOrientationData.accelerationIncludingGravity.z;
+        return [x,y,z];
+    }
+
+    function test_orientation() {
+        var show = null;
+        for (var i = 0;i < 10;i++){
+            sleep(1000).then(()=>{
+                show += JSON.stringify(orientation()) + '\n';
+            });
+        }
+        document.getElementById('test').value = show;
+    }
+
+    function sleep(time) {
+        return new Promise((resolve) => setTimeout(resolve,time));
+    }
 </script>
 </body>
 </html>
