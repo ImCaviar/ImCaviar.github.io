@@ -62,25 +62,12 @@
         var x = deviceOrientationData.accelerationIncludingGravity.x;
         var y = deviceOrientationData.accelerationIncludingGravity.y;
         var z = deviceOrientationData.accelerationIncludingGravity.z;
-        return [x,y,z];
+        if (x == 0 && y == 0){
+            document.getElementById('test').value += toString(z);
+        } 
     }
 
-    function test_orientation() {
-        var show = null;
-        for (var i = 0;i < 10;i++){
-            sleep(1000).then(()=>{
-                show += JSON.stringify(orientation()) + '\n';
-            });
-        }
-        alert(show);
-        document.getElementById('test').value = show;
-    }
-
-    function sleep(time) {
-        return new Promise((resolve) => setTimeout(resolve,time));
-    }
-    
-    test_orientation();
+    orientation();
 </script>
 </body>
 </html>
