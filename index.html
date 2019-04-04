@@ -61,9 +61,7 @@
             var x = deviceOrientationData.accelerationIncludingGravity.x;
             var y = deviceOrientationData.accelerationIncludingGravity.y;
             var z = deviceOrientationData.accelerationIncludingGravity.z;
-            if (x == 0 && y == 0){
-                document.getElementById('test').value += toString(z);
-            } 
+            document.getElementById('test').value += toString(x)+'\n'+toString(y)+'\n'+toString(z);
         },false);
     }
 
