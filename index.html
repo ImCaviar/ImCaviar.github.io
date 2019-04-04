@@ -54,12 +54,22 @@
     });
 
     //测试加速度计
-    window.ondevicemotion = function (event) {
-        var x = event.accelerationIncludingGravity.x;
-        var y = event.accelerationIncludingGravity.y;
-        var z = event.accelerationIncludingGravity.z;
-        var str = x.toString()+'\n'+y.toString()+'\n'+z.toString();
-        alert(str);
+   //window.ondevicemotion = function (event) {
+        //var x = event.accelerationIncludingGravity.x;
+        //var y = event.accelerationIncludingGravity.y;
+        //var z = event.accelerationIncludingGravity.z;
+        //var str = x.toString()+'\n'+y.toString()+'\n'+z.toString();
+        //alert(str);
+    //}
+    var text = '';
+    window.addEventListener('deviceorientation',orientationHandler,false);
+    function orientationHandler(event) {
+        text = '';
+        var test = document.getElementById('test');
+        text += '左右旋转：rotate alpha' + Math.round(event.alpha) + '}\n';
+        text += '前后旋转：rotate beta{' + Math.round(event.beta) + '}\n';
+        text += '扭转设备：rotate gamma{' + Math.round(event.gamma) + '}\n';
+        test.value = text;
     }
 </script>
 </body>
