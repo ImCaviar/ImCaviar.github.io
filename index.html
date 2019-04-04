@@ -54,13 +54,6 @@
     });
 
     //测试加速度计
-   //window.ondevicemotion = function (event) {
-        //var x = event.accelerationIncludingGravity.x;
-        //var y = event.accelerationIncludingGravity.y;
-        //var z = event.accelerationIncludingGravity.z;
-        //var str = x.toString()+'\n'+y.toString()+'\n'+z.toString();
-        //alert(str);
-    //}
     var text = '';
     window.addEventListener('deviceorientation',orientationHandler,false);
     function orientationHandler(event) {
@@ -70,6 +63,15 @@
         text += '前后旋转：rotate beta{' + Math.round(event.beta) + '}\n';
         text += '扭转设备：rotate gamma{' + Math.round(event.gamma) + '}\n';
         test.value = text;
+        if (Math.round(event.beta == 0 && event.gamma == 0)){
+            window.ondevicemotion = function (e) {
+                var x = e.accelerationIncludingGravity.x;
+                var y = e.accelerationIncludingGravity.y;
+                var z = e.accelerationIncludingGravity.z;
+                var str = x.toString()+'\n'+y.toString()+'\n'+z.toString();
+                alert(str);
+            }
+        }
     }
 </script>
 </body>
