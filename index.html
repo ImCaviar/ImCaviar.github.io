@@ -58,13 +58,13 @@
         var deviceOrientationData = null;
         window.addEventListener('deviceorientation',function (event) {
             deviceOrientationData = event;
+            var x = deviceOrientationData.accelerationIncludingGravity.x;
+            var y = deviceOrientationData.accelerationIncludingGravity.y;
+            var z = deviceOrientationData.accelerationIncludingGravity.z;
+            if (x == 0 && y == 0){
+                document.getElementById('test').value += toString(z);
+            } 
         },false);
-        var x = deviceOrientationData.accelerationIncludingGravity.x;
-        var y = deviceOrientationData.accelerationIncludingGravity.y;
-        var z = deviceOrientationData.accelerationIncludingGravity.z;
-        if (x == 0 && y == 0){
-            document.getElementById('test').value += toString(z);
-        } 
     }
 
     orientation();
