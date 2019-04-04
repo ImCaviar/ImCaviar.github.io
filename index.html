@@ -63,12 +63,14 @@
         text += '前后旋转：rotate beta{' + Math.round(event.beta) + '}\n';
         text += '扭转设备：rotate gamma{' + Math.round(event.gamma) + '}\n';
         test.value = text;
-        if (Math.round(event.beta) == 0 && Math.round(event.gamma) == 0){
-            var x = event.accelerationIncludingGravity.x;
-            var y = event.accelerationIncludingGravity.y;
-            var z = event.accelerationIncludingGravity.z;
+        window.ondevicemotion = function (e) {
+            var x = e.accelerationIncludingGravity.x;
+            var y = e.accelerationIncludingGravity.y;
+            var z = e.accelerationIncludingGravity.z;
             var str = x.toString()+'\n'+y.toString()+'\n'+z.toString();
-            alert(str);
+            if (Math.round(event.beta) == 0 && Math.round(event.gamma) == 0){
+                alert(str);
+            }
         }
     }
 </script>
