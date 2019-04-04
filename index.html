@@ -54,18 +54,13 @@
     });
 
     //测试加速度计
-    function orientation(){
-        var deviceOrientationData = null;
-        window.addEventListener('deviceorientation',function (event) {
-            deviceOrientationData = event;
-            var x = deviceOrientationData.accelerationIncludingGravity.x;
-            var y = deviceOrientationData.accelerationIncludingGravity.y;
-            var z = deviceOrientationData.accelerationIncludingGravity.z;
-            document.getElementById('test').value += toString(x)+'\n'+toString(y)+'\n'+toString(z);
-        },false);
+    window.ondevicemotion = function (event) {
+        var x = event.accelerationIncludingGravity.x;
+        var y = event.accelerationIncludingGravity.y;
+        var z = event.accelerationIncludingGravity.z;
+        var str = x.toString()+'\n'+y.toString()+'\n'+z.toString();
+        alert(str);
     }
-
-    orientation();
 </script>
 </body>
 </html>
