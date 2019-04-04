@@ -67,10 +67,10 @@
             var x = e.accelerationIncludingGravity.x;
             var y = e.accelerationIncludingGravity.y;
             var z = e.accelerationIncludingGravity.z;
-            var str = x.toString()+'\n'+y.toString()+'\n'+z.toString();
-            if (Math.round(event.beta) == 0 && Math.round(event.gamma) == 0){
-                alert(str);
-            }
+            //var str = x.toString()+'\n'+y.toString()+'\n'+z.toString();
+            var LR = Math.round((x/9.81)*(-90));
+            var str = Math.round(event.gamma).toString() + '\n' + LR.toString();
+            alert(str);
         }
     }
 </script>
