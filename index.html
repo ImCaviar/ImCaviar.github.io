@@ -53,26 +53,22 @@
        //document.getElementById('test').value = audiofp;
     });
 
-    //测试加速度计
-    var text = '';
-    window.addEventListener('deviceorientation',orientationHandler,false);
-    function orientationHandler(event) {
-        text = '';
-        var test = document.getElementById('test');
-        text += '左右旋转：rotate alpha{' + Math.round(event.alpha) + '}\n';
-        text += '前后旋转：rotate beta{' + Math.round(event.beta) + '}\n';
-        text += '扭转设备：rotate gamma{' + Math.round(event.gamma) + '}\n';
-        test.value = text;
-        window.ondevicemotion = function (e) {
-            var x = e.accelerationIncludingGravity.x;
-            var y = e.accelerationIncludingGravity.y;
-            var z = e.accelerationIncludingGravity.z;
-            //var str = x.toString()+'\n'+y.toString()+'\n'+z.toString();
-            var LR = Math.round((x/9.81)*(-90));
-            var str = Math.round(event.gamma).toString() + '\n' + LR.toString();
-            alert(str);
+    //计算机时钟信号差异
+    function cpu_time() {
+        //测试正则表达式
+        var time = ['1997-09-01','2019-4-8','2020-12-02','1000-23-100','01-21-33','105-23-01','1000-100-10','11-11-11','1-10-100','100-100-100','2019-1-1'];
+        var reg = new RegExp('^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)$');
+        var starttime = new Date();
+        for (var x = 0; x < 1000; x++){
+            for (let year in time){
+                reg.test(year);
+            }
         }
+        var endtime = new Date();
+        var logtime = endtime - starttime;
+        alert(logtime);
     }
+    cpu_time();
 </script>
 </body>
 </html>
