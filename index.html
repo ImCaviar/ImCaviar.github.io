@@ -68,7 +68,37 @@
         var logtime = endtime - starttime;
         alert(logtime);
     }
-    cpu_time();
+    //cpu_time();
+    //WebGL学习
+    function webgl() {
+        var scene = new THREE.Scene();
+        //相机开角，成像比例，相机能拍摄到的最近距离，相机能拍摄到的最远距离
+        var camera = new THREE.PerspectiveCamera(45,window.innerWidth/window.innerHeight,1,1000);
+        var renderer = new THREE.WebGLRenderer();
+        //最后渲染出来的大小，最好和相机第二个参数一致
+        renderer.setSize(window.innerWidth,window.innerHeight);
+
+        //添加一个立方体
+        var box = new THREE.Mesh(
+            new THREE.BoxGeometry(2,2,2),
+            new THREE.MeshBasicMaterial({
+                color:0xffff00
+            })
+        );
+
+        //将立方体放到原点位置
+        box.position.set(0,0,0);
+        scene.add(box);
+
+        //将相机放到立方体的斜上方，并对着立方体
+        camera.position.set(5,5,5);
+        camera.lookAt(box.position);
+
+        //渲染场景
+        document.getElementById('gl').appendChild(renderer.domElement);
+        renderer.render(scene,camera);
+    }
+    webgl();
 </script>
 </body>
 </html>
