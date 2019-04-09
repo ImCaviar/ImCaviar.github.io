@@ -78,7 +78,7 @@
             ongoingTouches.push(copyTouch(touches[i]));
             var color = colorForTouch(touches[i]);
             ctx.beginPath();
-            ctx.arc(touches[i].pageX-600,touches[i].pageY-100,4,0,2*Math.PI,false);
+            ctx.arc(touches[i].pageX-1000,touches[i].pageY-1000,4,0,2*Math.PI,false);
             //在起点画一个圆
             ctx.fillStyle = color;
             ctx.fill();
