@@ -42,21 +42,21 @@
     let magSensor = new Magnetometer({frequency:60});
     magSensor.addEventListener('reading',e => {
         sensor_num ++;
-        var str = 'x轴'+magSensor.x+'\n'+'y轴'+magSensor.y+'\n'+'z轴'+magSensor.z;
+        var str = 'x轴'+magSensor.x.toString()+'\n'+'y轴'+magSensor.y.toString()+'\n'+'z轴'+magSensor.z.toString();
         document.getElementById('magnetometer').value = str;
     });
     magSensor.start();
     let gyroscope = new Gyroscope({frequency: 60});
     gyroscope.addEventListener('reading',e => {
         sensor_num ++;
-        var str = 'x轴'+gyroscope.x+'\n'+'y轴'+gyroscope.y+'\n'+'z轴'+gyroscope.z;
+        var str = 'x轴'+gyroscope.x.toString()+'\n'+'y轴'+gyroscope.y.toString()+'\n'+'z轴'+gyroscope.z.toString();
         document.getElementById('gyroscope').value = str;
     });
     gyroscope.start();
     if (navigator.geolocation){
         sensor_num ++;
         navigator.geolocation.getCurrentPosition(function (pos) {
-            var str = '经度'+pos.coords.longitude+'\n'+'纬度'+pos.coords.latitude;
+            var str = '经度'+pos.coords.longitude.toString()+'\n'+'纬度'+pos.coords.latitude.toString();
             document.getElementById('gps').value = str;
         })
     }
