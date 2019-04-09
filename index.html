@@ -57,6 +57,7 @@
         sensor_num ++;
         navigator.geolocation.getCurrentPosition(function (pos) {
             var str = '经度'+pos.coords.longitude+'\n'+'纬度'+pos.coords.latitude;
+            document.getElementById('gps').value = str;
         })
     }
     alert(sensor_num);
