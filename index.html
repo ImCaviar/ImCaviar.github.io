@@ -7,19 +7,17 @@
 <body>
 光线强度：<input id="light"></br>
 距离：<input id="proximity"></br>
-重力：<input id="gravity"></br>
+重力：<textarea id="gravity" style="height: 300px; width: 500px; overflow: hidden"></textarea></br>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     var sensor_num = 0;
     if (window.DeviceLightEvent){
-        alert("light");
         sensor_num ++;
         window.addEventListener('devicelight',function (event) {
             document.getElementById('light').value = event.value;
         })
     }
     if (window.DeviceProximityEvent || window.UserProximityEvent){
-        alert("proximity");
         sensor_num ++;
         window.addEventListener('userproximity',function (event){
             if (event.near){
@@ -30,7 +28,6 @@
         })
     }
     if (window.DeviceMotionEvent){
-        alert("motion");
         sensor_num ++;
         window.addEventListener('devicemotion',deviceMotionHandler,false);
         function deviceMotionHandler(event) {
