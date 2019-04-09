@@ -11,13 +11,13 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     var sensor_num = 0;
-    if (window.ondevicelight){
+    if (window.DeviceLightEvent){
         sensor_num ++;
         window.addEventListener('devicelight',function (event) {
             document.getElementById('light').innerText = event.value;
         })
     }
-    if (window.ondeviceproximity || window.onuserproximity){
+    if (window.DeviceProximityEvent || window.UserProximityEvent){
         sensor_num ++;
         window.addEventListener('userproximity',function (event){
             if (event.near){
@@ -27,13 +27,14 @@
             }
         })
     }
-    if (window.ondevicemotion){
+    if (window.DeviceMotionEvent){
         sensor_num ++;
-        window.addEventListener('devicemotion',function (event) {
+        window.addEventListener('devicemotion',deviceMotionHandler,false);
+        function deviceMotionHandler(event) {
             var g = event.accelerationIncludingGravity;
             var str = g.x.toString()+'\n'+g.y.toString()+'\n'+g.z.toString();
             document.getElementById('gravity').innerText = str;
-        });
+        }
     }
     alert(sensor_num);
 </script>
