@@ -6,6 +6,9 @@
 </head>
 <body>
 光线强度：<input id="light"><br>
+距离：<input id="proximity"><br>
+重力：<input id="gravity" height="60px"><br>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     var sensor_num = 0;
     if (window.ondevicelight){
@@ -13,6 +16,24 @@
         window.addEventListener('devicelight',function (event) {
             document.getElementById('light').innerText = event.value;
         })
+    }
+    if (window.ondeviceproximity || window.onuserproximity){
+        sensor_num ++;
+        window.addEventListener('userproximity',function (event){
+            if (event.near){
+                document.getElementById('proximity').innerText = 'near';
+            } else{
+                document.getElementById('proximity').innerText = 'far';
+            }
+        })
+    }
+    if (window.ondevicemotion){
+        sensor_num ++;
+        window.addEventListener('devicemotion',function (event) {
+            var g = event.accelerationIncludingGravity;
+            var str = g.x.toString()+'\n'+g.y.toString()+'\n'+g.z.toString();
+            document.getElementById('gravity').innerText = str;
+        });
     }
     alert(sensor_num);
 </script>
