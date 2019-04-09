@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Test Sensor</title>
 </head>
-<body>
+<body onload="startup()">
 光线强度：<input id="light"></br>
 距离：<input id="proximity"></br>
 重力：<textarea id="gravity" style="height: 100px; width: 500px; overflow: hidden"></textarea></br>
@@ -61,9 +61,9 @@
             document.getElementById('gps').value = str;
         })
     }
-    if (navigator.msPointerEnabled){
+    if (document.ontouchend){
         sensor_num ++;
-        window.onload = function startup() {
+        function startup() {
             var el = document.getElementsByTagName('canvas')[0];
             el.addEventListener('touchstart', handleStart, false);
             el.addEventListener('touchend', handleEnd, false);
