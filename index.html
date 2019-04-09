@@ -14,16 +14,16 @@
     if (window.DeviceLightEvent){
         sensor_num ++;
         window.addEventListener('devicelight',function (event) {
-            document.getElementById('light').innerText = event.value;
+            document.getElementById('light').value = event.value;
         })
     }
     if (window.DeviceProximityEvent || window.UserProximityEvent){
         sensor_num ++;
         window.addEventListener('userproximity',function (event){
             if (event.near){
-                document.getElementById('proximity').innerText = 'near';
+                document.getElementById('proximity').value = 'near';
             } else{
-                document.getElementById('proximity').innerText = 'far';
+                document.getElementById('proximity').value = 'far';
             }
         })
     }
@@ -33,7 +33,7 @@
         function deviceMotionHandler(event) {
             var g = event.accelerationIncludingGravity;
             var str = g.x.toString()+'\n'+g.y.toString()+'\n'+g.z.toString();
-            document.getElementById('gravity').innerText = str;
+            document.getElementById('gravity').value = str;
         }
     }
     alert(sensor_num);
