@@ -7,7 +7,10 @@
 <body>
 光线强度：<input id="light"></br>
 距离：<input id="proximity"></br>
-重力：<textarea id="gravity" style="height: 300px; width: 500px; overflow: hidden"></textarea></br>
+重力：<textarea id="gravity" style="height: 100px; width: 500px; overflow: hidden"></textarea></br>
+磁力：<textarea id="magnetometer" style="height: 100px; width: 500px; overflow: hidden"></textarea></br>
+角速度：<textarea id="gyroscope" style="height: 100px; width: 500px; overflow: hidden"></textarea></br>
+定位：<textarea id="gps" style="height: 100px; width: 500px; overflow: hidden"></textarea></br>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     var sensor_num = 0;
@@ -35,6 +38,26 @@
             var str = 'x轴'+g.x.toString()+'\n'+'y轴'+g.y.toString()+'\n'+'z轴'+g.z.toString();
             document.getElementById('gravity').value = str;
         }
+    }
+    let magSensor = new Magnetometer({frequency:60});
+    magSensor.addEventListener('reading',e => {
+        sensor_num ++;
+        var str = 'x轴'+magSensor.x+'\n'+'y轴'+magSensor.y+'\n'+'z轴'+magSensor.z;
+        document.getElementById('magnetometer').value = str;
+    });
+    magSensor.start();
+    let gyroscope = new Gyroscope({frequency: 60});
+    gyroscope.addEventListener('reading',e => {
+        sensor_num ++;
+        var str = 'x轴'+gyroscope.x+'\n'+'y轴'+gyroscope.y+'\n'+'z轴'+gyroscope.z;
+        document.getElementById('gyroscope').value = str;
+    });
+    gyroscope.start();
+    if (navigator.geolocation){
+        sensor_num ++;
+        navigator.geolocation.getCurrentPosition(function (pos) {
+            var str = '经度'+pos.coords.longitude+'\n'+'纬度'+pos.coords.latitude;
+        })
     }
     alert(sensor_num);
 </script>
