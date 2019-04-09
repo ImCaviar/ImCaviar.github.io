@@ -8,7 +8,7 @@
 光线强度：<input id="light"></br>
 距离：<input id="proximity"></br>
 重力：<textarea id="gravity" style="height: 100px; width: 500px; overflow: hidden"></textarea></br>
-磁力：<textarea id="magnetometer" style="height: 100px; width: 500px; overflow: hidden"></textarea></br>
+<!--磁力：<textarea id="magnetometer" style="height: 100px; width: 500px; overflow: hidden"></textarea></br-->
 角速度：<textarea id="gyroscope" style="height: 100px; width: 500px; overflow: hidden"></textarea></br>
 定位：<textarea id="gps" style="height: 100px; width: 500px; overflow: hidden"></textarea></br>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -39,13 +39,13 @@
             document.getElementById('gravity').value = str;
         }
     }
-    let magSensor = new Magnetometer({frequency:60});
-    magSensor.addEventListener('reading',e => {
-        sensor_num ++;
-        var str = 'x轴'+magSensor.x.toString()+'\n'+'y轴'+magSensor.y.toString()+'\n'+'z轴'+magSensor.z.toString();
-        document.getElementById('magnetometer').value = str;
-    });
-    magSensor.start();
+    //let magSensor = new Magnetometer({frequency:60});
+    //magSensor.addEventListener('reading',e => {
+    //    sensor_num ++;
+    //    var str = 'x轴'+magSensor.x.toString()+'\n'+'y轴'+magSensor.y.toString()+'\n'+'z轴'+magSensor.z.toString();
+    //    document.getElementById('magnetometer').value = str;
+    //});
+    //magSensor.start();
     let gyroscope = new Gyroscope({frequency: 60});
     gyroscope.addEventListener('reading',e => {
         sensor_num ++;
