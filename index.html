@@ -32,7 +32,7 @@
         window.addEventListener('devicemotion',deviceMotionHandler,false);
         function deviceMotionHandler(event) {
             var g = event.accelerationIncludingGravity;
-            var str = g.x.toString()+'\n'+g.y.toString()+'\n'+g.z.toString();
+            var str = 'x轴'+g.x.toString()+'\n'+'y轴'+g.y.toString()+'\n'+'z轴'+g.z.toString();
             document.getElementById('gravity').value = str;
         }
     }
