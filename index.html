@@ -96,7 +96,7 @@ Web可以检测到的传感器数量：<input id="sensor"></br>
             ongoingTouches.push(copyTouch(touches[i]));
             var color = colorForTouch(touches[i]);
             ctx.beginPath();
-            ctx.arc(touches[i].pageX,touches[i].pageY,4,0,2*Math.PI,false);
+            ctx.arc(touches[i].offsetX,touches[i].offsetY,4,0,2*Math.PI,false);
             //在起点画一个圆
             ctx.fillStyle = color;
             ctx.fill();
@@ -115,8 +115,8 @@ Web可以检测到的传感器数量：<input id="sensor"></br>
 
             if (idx >= 0){
                 ctx.beginPath();
-                ctx.moveTo(ongoingTouches[idx].pageX,ongoingTouches[idx].pageY);
-                ctx.lineTo(touches[i].pageX,touches[i].pageY);
+                ctx.moveTo(ongoingTouches[idx].offsetX,ongoingTouches[idx].offsetY);
+                ctx.lineTo(touches[i].offsetX,touches[i].offsetY);
                 ctx.lineWidth = 4;
                 ctx.strokeStyle = color;
                 ctx.stroke();
@@ -140,9 +140,9 @@ Web可以检测到的传感器数量：<input id="sensor"></br>
                 ctx.lineWidth = 4;
                 ctx.fillStyle = color;
                 ctx.beginPath();
-                ctx.moveTo(ongoingTouches[idx].pageX,ongoingTouches[idx].pageY);
-                ctx.lineTo(touches[i].pageX,touches[i].pageY);
-                ctx.fillRect(touches[i].pageX-4, touches[i].pageY-4,8,8);
+                ctx.moveTo(ongoingTouches[idx].offsetX,ongoingTouches[idx].offsetY);
+                ctx.lineTo(touches[i].offsetX,touches[i].offsetY);
+                ctx.fillRect(touches[i].offsetX-4, touches[i].offsetY-4,8,8);
                 //终点画个正方形
                 ongoingTouches.splice(idx,1);//用完后移除
             }
@@ -161,7 +161,7 @@ Web可以检测到的传感器数量：<input id="sensor"></br>
     }
     //复制触摸对象
     function copyTouch(touch) {
-        return {identifier:touch.identifier,pageX:touch.pageX,pageY:touch.pageY};
+        return {identifier:touch.identifier,offsetX:touch.offsetX,offsetY:touch.offsetY};
     }
     //查找触摸点
     function ongoingTouchIndexById(idToFind) {
