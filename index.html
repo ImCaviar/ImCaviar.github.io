@@ -2,185 +2,106 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Test Sensor</title>
+    <title>Title</title>
 </head>
-<body onload="startup()">
-Web可以检测到的传感器数量：<input id="sensor"></br>
-光线强度：<input id="light"></br>
-距离：<input id="proximity"></br>
-重力：<textarea id="gravity" style="height: 100px; width: 500px; overflow: hidden"></textarea></br>
-磁力：<textarea id="magnetometer" style="height: 100px; width: 500px; overflow: hidden"></textarea></br>
-角速度：<textarea id="gyroscope" style="height: 100px; width: 500px; overflow: hidden"></textarea></br>
-定位：<textarea id="gps" style="height: 100px; width: 500px; overflow: hidden"></textarea></br>
-摄像头+麦克风：<input id="media"></br>
-触屏(画画🤣)：<canvas id="canvas" width="600" height="600" style="border:solid black 1px;"></canvas></br>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<body onload="drawSin()">
+<p>HELLO WORLD!</p><br/><br/><br/><br/><br/>
+<canvas height='300' width='400' id="tutorial"></canvas>
+<textarea id="test" style="height: 300px; width: 500px; overflow: hidden"></textarea>
+<div id="gl" height='300' width='400'></div>
+<canvas id="sin" height='200' width='300'></canvas>
+<a onclick="clickDownload(this)" download="rgb.csv" href="#">download</a>
+<!--a onclick="clickDownload(this)" download="audiofingerprint.csv" href="#">download</a -->
+<script type="text/javascript" src="audio-fingerprinting.js"></script>
+<script type="text/javascript" src="three/three.js"></script>
+<script type="text/javascript" src="canvas.js"></script>
+<script type="text/javascript" src="webgl/line.js"></script>
 <script>
-    var sensor_num = 0;
-    //光线感应
-    if (window.DeviceLightEvent){
-        sensor_num ++;
-        window.addEventListener('devicelight',function (event) {
-            document.getElementById('light').value = event.value;
-        })
-    }
-    //距离感应
-    if ('ProximitySensor' in window){
-        sensor_num ++;
-        window.addEventListener('userproximity',function (event){
-            if (event.near){
-                document.getElementById('proximity').value = 'near';
-            } else{
-                document.getElementById('proximity').value = 'far';
-            }
-        })
-    }
-    //重力感应
-    if (window.DeviceMotionEvent){
-        sensor_num ++;
-        window.addEventListener('devicemotion',deviceMotionHandler,false);
-        function deviceMotionHandler(event) {
-            var g = event.accelerationIncludingGravity;
-            var str = 'x轴'+g.x.toString()+'\n'+'y轴'+g.y.toString()+'\n'+'z轴'+g.z.toString();
-            document.getElementById('gravity').value = str;
-        }
-    }
-    //磁力感应
-    if (typeof Magnetometer === "function"){
-        sensor_num ++;
-        let magSensor = new Magnetometer({frequency:60});
-        magSensor.addEventListener('reading',e => {
-            var str = 'x轴'+magSensor.x.toString()+'\n'+'y轴'+magSensor.y.toString()+'\n'+'z轴'+magSensor.z.toString();
-            document.getElementById('magnetometer').value = str;
-        });
-        magSensor.start();
-    }
-    //角速度感应
-    if (typeof Gyroscope === "function"){
-        sensor_num ++;
-        let gyroscope = new Gyroscope({frequency: 60});
-        gyroscope.addEventListener('reading',e => {
-            var str = 'x轴'+gyroscope.x.toString()+'\n'+'y轴'+gyroscope.y.toString()+'\n'+'z轴'+gyroscope.z.toString();
-            document.getElementById('gyroscope').value = str;
-        });
-        gyroscope.start();
-    }
-    //定位功能
-    if (navigator.geolocation){
-        sensor_num ++;
-        navigator.geolocation.getCurrentPosition(function (pos) {
-            var str = '经度:'+pos.coords.longitude.toString()+'\n'+'纬度:'+pos.coords.latitude.toString();
-            document.getElementById('gps').value = str;
-        })
-    }
-    //摄像头、麦克风功能
-    if (navigator.getUserMedia) {
-        sensor_num ++;
-        document.getElementById('media').value = "√";
-    }else{
-        document.getElementById('media').value = '×';
-    }
-    //触摸功能
-    var flag = 0;
-    function startup() {
-        var el = document.getElementsByTagName('canvas')[0];
-        el.addEventListener('touchstart', handleStart, false);
-        el.addEventListener('touchend', handleEnd, false);
-        el.addEventListener('touchmove', handleMove, false);
-    }
-    //跟踪新的触摸点
-    var ongoingTouches = [];
-    function handleStart(evt) {
-        if (flag == 0){
-            sensor_num ++;
-            flag = 1;
-            document.getElementById('sensor').value = sensor_num;
-        }
-        var el = document.getElementsByTagName('canvas')[0];
-        var ctx = el.getContext('2d');
-        var touches = evt.changedTouches;
+    function get_text_dimensions(font) {
+        h = document.getElementsByTagName("body")[0];
+        d = document.createElement("div");
+        s = document.createElement("span");
 
-        for (var i = 0; i < touches.length; i++){
-            ongoingTouches.push(copyTouch(touches[i]));
-            var color = colorForTouch(touches[i]);
-            ctx.beginPath();
-            ctx.arc(touches[i].pageX-100,touches[i].pageY-500,4,0,2*Math.PI,false);
-            //在起点画一个圆
-            ctx.fillStyle = color;
-            ctx.fill();
-        }
+        d.appendChild(s);
+        d.style.fontFamily = font;
+        s.style.fontFamily = font;
+        s.style.fontSize = "72px";
+        s.innerHTML = "font_detection";
+        h.appendChild(d);
+
+        var textWidth = s.offsetWidth;
+        var textHeight = s.offsetHeight;
+        //h.removeChild(d);//隐藏测试字体
+
+        return [textWidth, textHeight];
     }
-    //触摸移动时
-    function handleMove(evt) {
-        evt.preventDefault();
-        var el = document.getElementsByTagName('canvas')[0];
-        var ctx = el.getContext('2d');
-        var touches = evt.changedTouches;
 
-        for (var i = 0;i < touches.length; i++){
-            var color = colorForTouch(touches[i]);
-            var idx = ongoingTouchIndexById(touches[i].identifier);
+    //测试默认字体
+    function judge_font(){
+        var rootFontFamily = (document.documentElement.currentStyle ? document.documentElement.currentStyle : window.getComputedStyle(document.documentElement)).fontFamily;
+        var fontsize = rootFontFamily + ":" + get_text_dimensions(rootFontFamily);
+        return fontsize;
+    }
 
-            if (idx >= 0){
-                ctx.beginPath();
-                ctx.moveTo(ongoingTouches[idx].pageX-100,ongoingTouches[idx].pageY-500);
-                ctx.lineTo(touches[i].pageX-100,touches[i].pageY-500);
-                ctx.lineWidth = 4;
-                ctx.strokeStyle = color;
-                ctx.stroke();
+    //测试音频指纹
+    var audiofp = null;
 
-                ongoingTouches.splice(idx,1,copyTouch(touches[i]))//切换触摸信息
+    //function clickDownload(aLink){
+    //    audioFingerprint.outputcsv(aLink);
+    //}
+
+    audioFingerprint.run(function (fp) {
+       audiofp = fp;
+       //document.getElementById('test').value = audiofp;
+    });
+
+    //计算机时钟信号差异
+    function cpu_time() {
+        //测试正则表达式
+        var time = ['1997-09-01','2019-4-8','2020-12-02','1000-23-100','01-21-33','105-23-01','1000-100-10','11-11-11','1-10-100','100-100-100','2019-1-1'];
+        var reg = new RegExp('^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)$');
+        var starttime = new Date();
+        for (var x = 0; x < 1000; x++){
+            for (let year in time){
+                reg.test(year);
             }
         }
+        var endtime = new Date();
+        var logtime = endtime - starttime;
+        alert(logtime);
     }
-    //触摸结束处理
-    function handleEnd(evt) {
-        evt.preventDefault();
-        var el = document.getElementsByTagName('canvas')[0];
-        var ctx = el.getContext('2d');
-        var touches = evt.changedTouches;
+    //cpu_time();
 
-        for (var i = 0;i < touches.length;i++){
-            var color = colorForTouch(touches[i]);
-            var idx = ongoingTouchIndexById(touches[i].identifier);
+    //WebGL学习
+    function webgl() {
+        var scene = new THREE.Scene();
+        //相机开角，成像比例，相机能拍摄到的最近距离，相机能拍摄到的最远距离
+        var camera = new THREE.PerspectiveCamera(45,window.innerWidth/window.innerHeight,1,1000);
+        var renderer = new THREE.WebGLRenderer();
+        //最后渲染出来的大小，最好和相机第二个参数一致
+        renderer.setSize(window.innerWidth,window.innerHeight);
 
-            if (idx >= 0){
-                ctx.lineWidth = 4;
-                ctx.fillStyle = color;
-                ctx.beginPath();
-                ctx.moveTo(ongoingTouches[idx].pageX-100,ongoingTouches[idx].pageY-500);
-                ctx.lineTo(touches[i].pageX-100,touches[i].pageY-500);
-                ctx.fillRect(touches[i].pageX-100, touches[i].pageY-500,8,8);
-                //终点画个正方形
-                ongoingTouches.splice(idx,1);//用完后移除
-            }
-        }
-    }
-    //为触摸点设置颜色
-    function colorForTouch(touch) {
-        var r = touch.identifier %16;
-        var g = Math.floor(touch.identifier / 3)%16;
-        var b = Math.floor(touch.identifier / 7)%16;
-        r = r.toString(16);// 转换为十六进制字符串
-        g = g.toString(16);
-        b = b.toString(16);
-        var color = '#'+r+g+b;
-        return color;
-    }
-    //复制触摸对象
-    function copyTouch(touch) {
-        return {identifier:touch.identifier,pageX:touch.pageX,pageY:touch.pageY};
-    }
-    //查找触摸点
-    function ongoingTouchIndexById(idToFind) {
-        for (var i=0;i<ongoingTouches.length;i++){
-            var id=ongoingTouches[i].identifier;
+        //添加一个立方体
+        var box = new THREE.Mesh(
+            new THREE.BoxGeometry(2,2,2),
+            new THREE.MeshBasicMaterial({
+                color:0xffff00
+            })
+        );
 
-            if (id == idToFind){return i;}
-        }
-        return -1;//未找到
+        //将立方体放到原点位置
+        box.position.set(0,0,0);
+        scene.add(box);
+
+        //将相机放到立方体的斜上方，并对着立方体
+        camera.position.set(5,5,5);
+        camera.lookAt(box.position);
+
+        //渲染场景
+        document.getElementById('gl').appendChild(renderer.domElement);
+        renderer.render(scene,camera);
     }
-    document.getElementById('sensor').value = sensor_num;
+    webgl();
 </script>
 </body>
 </html>
