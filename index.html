@@ -5,23 +5,26 @@
     <title>Test Sensor</title>
 </head>
 <body onload="startup()">
+Web可以检测到的传感器数量：<input id="sensor"></br>
 光线强度：<input id="light"></br>
 距离：<input id="proximity"></br>
 重力：<textarea id="gravity" style="height: 100px; width: 500px; overflow: hidden"></textarea></br>
-<!--磁力：<textarea id="magnetometer" style="height: 100px; width: 500px; overflow: hidden"></textarea></br-->
-<!--角速度：<textarea id="gyroscope" style="height: 100px; width: 500px; overflow: hidden"></textarea></br-->
+磁力：<textarea id="magnetometer" style="height: 100px; width: 500px; overflow: hidden"></textarea></br>
+角速度：<textarea id="gyroscope" style="height: 100px; width: 500px; overflow: hidden"></textarea></br>
 定位：<textarea id="gps" style="height: 100px; width: 500px; overflow: hidden"></textarea></br>
 画画🤣：<canvas id="canvas" width="600" height="600" style="border:solid black 1px;"></canvas></br>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     var sensor_num = 0;
+    //光线感应
     if (window.DeviceLightEvent){
         sensor_num ++;
         window.addEventListener('devicelight',function (event) {
             document.getElementById('light').value = event.value;
         })
     }
-    if (window.DeviceProximityEvent || window.UserProximityEvent){
+    //距离感应
+    if ('ProximitySensor' in window){
         sensor_num ++;
         window.addEventListener('userproximity',function (event){
             if (event.near){
@@ -31,6 +34,7 @@
             }
         })
     }
+    //重力感应
     if (window.DeviceMotionEvent){
         sensor_num ++;
         window.addEventListener('devicemotion',deviceMotionHandler,false);
@@ -40,20 +44,27 @@
             document.getElementById('gravity').value = str;
         }
     }
-    //let magSensor = new Magnetometer({frequency:60});
-    //magSensor.addEventListener('reading',e => {
-    //    sensor_num ++;
-    //    var str = 'x轴'+magSensor.x.toString()+'\n'+'y轴'+magSensor.y.toString()+'\n'+'z轴'+magSensor.z.toString();
-    //    document.getElementById('magnetometer').value = str;
-    //});
-    //magSensor.start();
-    //let gyroscope = new Gyroscope({frequency: 60});
-    //gyroscope.addEventListener('reading',e => {
-    //    sensor_num ++;
-    //    var str = 'x轴'+gyroscope.x.toString()+'\n'+'y轴'+gyroscope.y.toString()+'\n'+'z轴'+gyroscope.z.toString();
-    //   document.getElementById('gyroscope').value = str;
-    //});
-    //gyroscope.start();
+    //磁力感应
+    if (typeof Magnetometer === "function"){
+        sensor_num ++;
+        let magSensor = new Magnetometer({frequency:60});
+        magSensor.addEventListener('reading',e => {
+            var str = 'x轴'+magSensor.x.toString()+'\n'+'y轴'+magSensor.y.toString()+'\n'+'z轴'+magSensor.z.toString();
+            document.getElementById('magnetometer').value = str;
+        });
+        magSensor.start();
+    }
+    //方向感应
+    if (typeof Gyroscope === "function"){
+        sensor_num ++;
+        let gyroscope = new Gyroscope({frequency: 60});
+        gyroscope.addEventListener('reading',e => {
+            var str = 'x轴'+gyroscope.x.toString()+'\n'+'y轴'+gyroscope.y.toString()+'\n'+'z轴'+gyroscope.z.toString();
+            document.getElementById('gyroscope').value = str;
+        });
+        gyroscope.start();
+    }
+    //定位功能
     if (navigator.geolocation){
         sensor_num ++;
         navigator.geolocation.getCurrentPosition(function (pos) {
@@ -61,6 +72,8 @@
             document.getElementById('gps').value = str;
         })
     }
+    //触摸功能
+    var flag = 0;
     function startup() {
         var el = document.getElementsByTagName('canvas')[0];
         el.addEventListener('touchstart', handleStart, false);
@@ -70,6 +83,11 @@
     //跟踪新的触摸点
     var ongoingTouches = [];
     function handleStart(evt) {
+        if (flag == 0){
+            sensor_num ++;
+            flag = 1;
+            document.getElementById('sensor').value = sensor_num;
+        }
         var el = document.getElementsByTagName('canvas')[0];
         var ctx = el.getContext('2d');
         var touches = evt.changedTouches;
@@ -78,7 +96,7 @@
             ongoingTouches.push(copyTouch(touches[i]));
             var color = colorForTouch(touches[i]);
             ctx.beginPath();
-            ctx.arc(touches[i].pageX,touches[i].pageY,4,0,2*Math.PI,false);
+            ctx.arc(touches[i].pageX-50,touches[i].pageY-50,4,0,2*Math.PI,false);
             //在起点画一个圆
             ctx.fillStyle = color;
             ctx.fill();
@@ -154,7 +172,7 @@
         }
         return -1;//未找到
     }
-    alert(sensor_num.toString()+'\n触屏功能能画画就可用，否则不可用！');
+    document.getElementById('sensor').value = sensor_num;
 </script>
 </body>
 </html>
