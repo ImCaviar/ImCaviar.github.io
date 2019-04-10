@@ -96,7 +96,7 @@ Web可以检测到的传感器数量：<input id="sensor"></br>
             ongoingTouches.push(copyTouch(touches[i]));
             var color = colorForTouch(touches[i]);
             ctx.beginPath();
-            ctx.arc(touches[i].pageX-50,touches[i].pageY-50,4,0,2*Math.PI,false);
+            ctx.arc(touches[i].pageX,touches[i].pageY,4,0,2*Math.PI,false);
             //在起点画一个圆
             ctx.fillStyle = color;
             ctx.fill();
