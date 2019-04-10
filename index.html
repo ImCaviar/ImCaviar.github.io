@@ -12,7 +12,8 @@ Web可以检测到的传感器数量：<input id="sensor"></br>
 磁力：<textarea id="magnetometer" style="height: 100px; width: 500px; overflow: hidden"></textarea></br>
 角速度：<textarea id="gyroscope" style="height: 100px; width: 500px; overflow: hidden"></textarea></br>
 定位：<textarea id="gps" style="height: 100px; width: 500px; overflow: hidden"></textarea></br>
-画画🤣：<canvas id="canvas" width="600" height="600" style="border:solid black 1px;"></canvas></br>
+摄像头+麦克风：<input id="media"></br>
+触屏(画画🤣)：<canvas id="canvas" width="600" height="600" style="border:solid black 1px;"></canvas></br>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     var sensor_num = 0;
@@ -54,7 +55,7 @@ Web可以检测到的传感器数量：<input id="sensor"></br>
         });
         magSensor.start();
     }
-    //方向感应
+    //角速度感应
     if (typeof Gyroscope === "function"){
         sensor_num ++;
         let gyroscope = new Gyroscope({frequency: 60});
@@ -71,6 +72,13 @@ Web可以检测到的传感器数量：<input id="sensor"></br>
             var str = '经度:'+pos.coords.longitude.toString()+'\n'+'纬度:'+pos.coords.latitude.toString();
             document.getElementById('gps').value = str;
         })
+    }
+    //摄像头、麦克风功能
+    if (navigator.getUserMedia) {
+        sensor_num ++;
+        document.getElementById('media').value = "√";
+    }else{
+        document.getElementById('media').value = '×';
     }
     //触摸功能
     var flag = 0;
@@ -96,7 +104,7 @@ Web可以检测到的传感器数量：<input id="sensor"></br>
             ongoingTouches.push(copyTouch(touches[i]));
             var color = colorForTouch(touches[i]);
             ctx.beginPath();
-            ctx.arc(touches[i].pageX-50,touches[i].pageY-600,4,0,2*Math.PI,false);
+            ctx.arc(touches[i].pageX-100,touches[i].pageY-500,4,0,2*Math.PI,false);
             //在起点画一个圆
             ctx.fillStyle = color;
             ctx.fill();
@@ -115,8 +123,8 @@ Web可以检测到的传感器数量：<input id="sensor"></br>
 
             if (idx >= 0){
                 ctx.beginPath();
-                ctx.moveTo(ongoingTouches[idx].pageX-50,ongoingTouches[idx].pageY-600);
-                ctx.lineTo(touches[i].pageX-50,touches[i].pageY-600);
+                ctx.moveTo(ongoingTouches[idx].pageX-100,ongoingTouches[idx].pageY-500);
+                ctx.lineTo(touches[i].pageX-100,touches[i].pageY-500);
                 ctx.lineWidth = 4;
                 ctx.strokeStyle = color;
                 ctx.stroke();
@@ -140,9 +148,9 @@ Web可以检测到的传感器数量：<input id="sensor"></br>
                 ctx.lineWidth = 4;
                 ctx.fillStyle = color;
                 ctx.beginPath();
-                ctx.moveTo(ongoingTouches[idx].pageX-50,ongoingTouches[idx].pageY-600);
-                ctx.lineTo(touches[i].pageX-50,touches[i].pageY-600);
-                ctx.fillRect(touches[i].pageX-50, touches[i].pageY-600,8,8);
+                ctx.moveTo(ongoingTouches[idx].pageX-100,ongoingTouches[idx].pageY-500);
+                ctx.lineTo(touches[i].pageX-100,touches[i].pageY-500);
+                ctx.fillRect(touches[i].pageX-100, touches[i].pageY-500,8,8);
                 //终点画个正方形
                 ongoingTouches.splice(idx,1);//用完后移除
             }
