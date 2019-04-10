@@ -161,7 +161,7 @@ Web可以检测到的传感器数量：<input id="sensor"></br>
     }
     //复制触摸对象
     function copyTouch(touch) {
-        return {identifier:touch.identifier,pageX:touch.pageX-50,pageY:touch.pageY-600};
+        return {identifier:touch.identifier,pageX:touch.pageX,pageY:touch.pageY};
     }
     //查找触摸点
     function ongoingTouchIndexById(idToFind) {
