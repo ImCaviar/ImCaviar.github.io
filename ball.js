@@ -1,4 +1,4 @@
-document.write("<script language=javascript src='three/three.js'></script>");
+document.write("<script language=javascript src='../three/three.js'></script>");
 var head = 'data:text/csv;charset=utf-8,';
 var excel = '';
 function drawBall() {
@@ -56,7 +56,7 @@ function drawBall() {
     //console.log(img);
 
     //创建画布
-    var canvas = document.getElementById('can');
+    var canvas = document.createElement('canvas');
     var ctx = canvas.getContext('2d');
     ctx.drawImage(img,0,0,200,150);
     var data = ctx.getImageData(0,0,200,150).data;
