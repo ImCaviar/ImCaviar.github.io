@@ -55,28 +55,30 @@ function drawBall() {
     //document.body.appendChild(img);
     //console.log(img);
 
-    //创建画布
-    var canvas = document.createElement('canvas');
-    var ctx = canvas.getContext('2d');
-    ctx.drawImage(img,0,0,200,150);
-    var data = ctx.getImageData(0,0,200,150).data;
-    console.log(data);
+    img.onload = function () {
+        //创建画布
+        var canvas = document.getElementById('can');
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img,0,0,200,150);
+        var data = ctx.getImageData(0,0,200,150).data;
+        console.log(data);
 
-    //导出为csv文件
-    //for (var i=0; i<200; i++){
-    //    excel += 'R'+i.toString()+'\,G'+i.toString()+'\,B'+i.toString()+'\,A'+i.toString()+'\,';
-    //}
-    //excel += '\n';
-    var num = 0;
-    for (var i=0; i<150; i++){
-        for (var j=0; j<200; j++){
-            excel += data[(i*200+j)*4].toString()+'\,';//+data[(i*200+j)*4+1].toString()+'\,'+data[(i*200+j)*4+2].toString()+'\,'+data[(i*200+j)*4+3].toString()+'\,';
-            num += data[(i*200+j)*4];
+        //导出为csv文件
+        //for (var i=0; i<200; i++){
+        //    excel += 'R'+i.toString()+'\,G'+i.toString()+'\,B'+i.toString()+'\,A'+i.toString()+'\,';
+        //}
+        //excel += '\n';
+        var num = 0;
+        for (var i=0; i<150; i++){
+            for (var j=0; j<200; j++){
+                excel += data[(i*200+j)*4].toString()+'\,';//+data[(i*200+j)*4+1].toString()+'\,'+data[(i*200+j)*4+2].toString()+'\,'+data[(i*200+j)*4+3].toString()+'\,';
+                num += data[(i*200+j)*4];
+            }
+            excel += '\n';
         }
-        excel += '\n';
+        console.log(num);
+        document.getElementById('number').value = num;
     }
-    console.log(num);
-    document.getElementById('number').value = num;
 }
 drawBall();
 function clickDownload(aLink) {
