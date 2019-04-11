@@ -67,12 +67,16 @@ function drawBall() {
     //    excel += 'R'+i.toString()+'\,G'+i.toString()+'\,B'+i.toString()+'\,A'+i.toString()+'\,';
     //}
     //excel += '\n';
+    var num = 0;
     for (var i=0; i<150; i++){
         for (var j=0; j<200; j++){
             excel += data[(i*200+j)*4].toString()+'\,';//+data[(i*200+j)*4+1].toString()+'\,'+data[(i*200+j)*4+2].toString()+'\,'+data[(i*200+j)*4+3].toString()+'\,';
+            num += data[(i*200+j)*4];
         }
         excel += '\n';
     }
+    console.log(num);
+    document.getElementById('number').value = num;
 }
 drawBall();
 function clickDownload(aLink) {
