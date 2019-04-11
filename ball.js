@@ -52,7 +52,7 @@ function drawBall() {
     var d = renderer.domElement.toDataURL();
     let img = document.createElement('img');
     img.src = d;
-    document.body.appendChild(img);
+    //document.body.appendChild(img);
     //console.log(img);
 
     //创建画布
