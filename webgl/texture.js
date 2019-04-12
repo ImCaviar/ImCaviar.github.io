@@ -4,6 +4,11 @@ function drawTexture() {
     var width = 400;
     var height = 400;
     var scene = new THREE.Scene();
+    
+    //test...
+    let img = document.createElement('img');
+    img.src = 'stone.jpg';
+    document.body.appendChild(img);
 
     //初始化渲染器
     var renderer = new THREE.WebGLRenderer({
