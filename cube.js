@@ -3,8 +3,8 @@ var head = 'data:text/csv;charset=utf-8,';
 var excel = '';
 function drawCube() {
     //设置场景大小
-    var width = 1500;
-    var height = 700;
+    var width = 400;
+    var height = 400;
     var scene = new THREE.Scene();
 
     //设置相机参数,相机开角，成像比例，相机能拍摄到的最近距离，相机能拍摄到的最远距离
@@ -12,13 +12,16 @@ function drawCube() {
 
     //新建渲染
     var renderer = new THREE.WebGLRenderer();
+    renderer.setClearColor(0xffffff);
     renderer.setSize(width,height);
+    renderer.shadowMap.enabled = true;//支持阴影效果
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;//阴影类型
 
     //添加一个立方体
     var box = new THREE.Mesh(
         new THREE.BoxGeometry(2,2,2),
-        new THREE.MeshBasicMaterial({
-            color:0xffff00
+        new THREE.MeshLambertMaterial({
+            color:0xffdd00
         }));
 
     //把立方体放到原点位置
@@ -31,6 +34,11 @@ function drawCube() {
     camera.position.set(5,5,5);
     camera.lookAt(box.position);
 
+    //设置光源
+    var light = new THREE.DirectionalLight(0xffffff,1);
+    light.position.set(10,50,100);
+    scene.add(light);
+
     //渲染场景
     document.getElementById('cube').appendChild(renderer.domElement);
     renderer.render(scene,camera);
@@ -39,7 +47,7 @@ function drawCube() {
     var d = renderer.domElement.toDataURL();
     let img = document.createElement('img');
     img.src = d;
-    //console.log(d);
+    console.log(d);
 
     //复制图片并计算像素值的和
     img.onload = function () {
@@ -55,18 +63,21 @@ function drawCube() {
         //    excel += 'R'+i.toString()+'\,G'+i.toString()+'\,B'+i.toString()+'\,A'+i.toString()+'\,';
         //}
         //excel += '\n';
-        var num = 0;
+        var numr = 0;
+        var numg = 0;
+        var numb = 0;
         for (var i=0; i<height; i++){
             for (var j=0; j<width; j++){
                 //excel += data[(i*300+j)*4].toString()+'\,'+data[(i*300+j)*4+1].toString()+'\,'+data[(i*300+j)*4+2].toString()+'\,'+data[(i*300+j)*4+3].toString()+'\,';
-                if (data[(i*width+j)*4]==255){
-                    num ++;
+                if (data[(i*width+j)*4+2]!=255){
+                    numr += data[(i*width+j)*4];
+                    numg += data[(i*width+j)*4+1];
                 }
             }
             //excel += '\n';
         }
-        console.log(num);
-        document.getElementById('number2').value = num;
+        document.getElementById('number2R').value = numr;
+        document.getElementById('number2G').value = numg;
     }
 }
 drawCube();
