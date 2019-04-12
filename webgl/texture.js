@@ -7,7 +7,7 @@ function drawTexture() {
     
     //test...
     let img = document.createElement('img');
-    img.src = 'stone.jpg';
+    img.src = 'webgl/stone.jpg';
     document.body.appendChild(img);
     console.log(img);
 
