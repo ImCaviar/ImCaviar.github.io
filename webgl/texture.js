@@ -14,7 +14,7 @@ function drawTexture() {
 
     //初始化对象，立方体
     var loader = new THREE.TextureLoader();
-    loader.load('../img/stone.jpg',function (texture) {
+    loader.load('stone.jpg',function (texture) {
         var material = new THREE.MeshLambertMaterial({
             map:texture
         });
