@@ -3,8 +3,8 @@ var head = 'data:text/csv;charset=utf-8,';
 var excel = '';
 function drawCube() {
     //设置场景大小
-    var width = 1000;
-    var height = 1000;
+    var width = 1500;
+    var height = 700;
     var scene = new THREE.Scene();
 
     //设置相机参数,相机开角，成像比例，相机能拍摄到的最近距离，相机能拍摄到的最远距离
@@ -46,8 +46,8 @@ function drawCube() {
         //创建画布
         var canvas = document.getElementById('can2');
         var ctx = canvas.getContext('2d');
-        ctx.drawImage(img,0,0,1000,1000);
-        var data = ctx.getImageData(0,0,1000,1000).data;
+        ctx.drawImage(img,0,0,width,height);
+        var data = ctx.getImageData(0,0,width,height).data;
         console.log(data);
 
         //导出为csv文件
@@ -56,10 +56,10 @@ function drawCube() {
         //}
         //excel += '\n';
         var num = 0;
-        for (var i=0; i<1000; i++){
-            for (var j=0; j<1000; j++){
+        for (var i=0; i<height; i++){
+            for (var j=0; j<width; j++){
                 //excel += data[(i*300+j)*4].toString()+'\,'+data[(i*300+j)*4+1].toString()+'\,'+data[(i*300+j)*4+2].toString()+'\,'+data[(i*300+j)*4+3].toString()+'\,';
-                if (data[(i*1000+j)*4]==255){
+                if (data[(i*width+j)*4]==255){
                     num ++;
                 }
             }
