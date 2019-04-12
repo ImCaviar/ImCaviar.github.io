@@ -4,12 +4,6 @@ function drawTexture() {
     var width = 400;
     var height = 400;
     var scene = new THREE.Scene();
-    
-    //test...
-    let img = document.createElement('img');
-    img.src = 'webgl/stone.jpg';
-    document.body.appendChild(img);
-    console.log(img);
 
     //初始化渲染器
     var renderer = new THREE.WebGLRenderer({
@@ -20,7 +14,7 @@ function drawTexture() {
 
     //初始化对象，立方体
     var loader = new THREE.TextureLoader();
-    loader.load('stone.jpg',function (texture) {
+    loader.load('webgl/stone.jpg',function (texture) {
         var material = new THREE.MeshLambertMaterial({
             map:texture
         });
