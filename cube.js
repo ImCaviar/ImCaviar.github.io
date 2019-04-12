@@ -3,8 +3,8 @@ var head = 'data:text/csv;charset=utf-8,';
 var excel = '';
 function drawCube() {
     //设置场景大小
-    var width = 300;
-    var height = 200;
+    var width = 400;
+    var height = 400;
     var scene = new THREE.Scene();
 
     //设置相机参数,相机开角，成像比例，相机能拍摄到的最近距离，相机能拍摄到的最远距离
@@ -16,7 +16,7 @@ function drawCube() {
 
     //添加一个立方体
     var box = new THREE.Mesh(
-        new THREE.BoxGeometry(3.5,3.5,3.5),
+        new THREE.BoxGeometry(5,5,5),
         new THREE.MeshBasicMaterial({
             color:0xffff00
         }));
@@ -28,7 +28,7 @@ function drawCube() {
     scene.add(box);
 
     //将相机放到立方体斜上方并对着立方体
-    camera.position.set(5,5,5);
+    camera.position.set(7,7,7);
     camera.lookAt(box.position);
 
     //渲染场景
@@ -46,8 +46,8 @@ function drawCube() {
         //创建画布
         var canvas = document.getElementById('can2');
         var ctx = canvas.getContext('2d');
-        ctx.drawImage(img,0,0,300,200);
-        var data = ctx.getImageData(0,0,300,200).data;
+        ctx.drawImage(img,0,0,400,400);
+        var data = ctx.getImageData(0,0,400,400).data;
         console.log(data);
 
         //导出为csv文件
@@ -56,10 +56,12 @@ function drawCube() {
         //}
         //excel += '\n';
         var num = 0;
-        for (var i=0; i<200; i++){
-            for (var j=0; j<300; j++){
+        for (var i=0; i<400; i++){
+            for (var j=0; j<400; j++){
                 //excel += data[(i*300+j)*4].toString()+'\,'+data[(i*300+j)*4+1].toString()+'\,'+data[(i*300+j)*4+2].toString()+'\,'+data[(i*300+j)*4+3].toString()+'\,';
-                num += data[(i*200+j)*4];
+                if (data[(i*300+j)*4]==255){
+                    num ++;
+                }
             }
             //excel += '\n';
         }
