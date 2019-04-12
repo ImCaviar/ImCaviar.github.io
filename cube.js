@@ -1,4 +1,4 @@
-document.write("<script language=javascript src='../three/three.js'></script>");
+document.write("<script language=javascript src='three/three.js'></script>");
 var head = 'data:text/csv;charset=utf-8,';
 var excel = '';
 function drawCube() {
@@ -68,7 +68,7 @@ function drawCube() {
     }
 }
 drawCube();
-function clickDownload(aLink) {
-    aLink.href = head + encodeURIComponent(excel);
-    aLink.click();
-}
+//function clickDownload(aLink) {
+//    aLink.href = head + encodeURIComponent(excel);
+//    aLink.click();
+//}
