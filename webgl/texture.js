@@ -9,6 +9,7 @@ function drawTexture() {
     let img = document.createElement('img');
     img.src = 'stone.jpg';
     document.body.appendChild(img);
+    console.log(img);
 
     //初始化渲染器
     var renderer = new THREE.WebGLRenderer({
