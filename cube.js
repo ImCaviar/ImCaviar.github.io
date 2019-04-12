@@ -16,7 +16,7 @@ function drawCube() {
 
     //添加一个立方体
     var box = new THREE.Mesh(
-        new THREE.BoxGeometry(3,3,3),
+        new THREE.BoxGeometry(2,2,2),
         new THREE.MeshBasicMaterial({
             color:0xffff00
         }));
