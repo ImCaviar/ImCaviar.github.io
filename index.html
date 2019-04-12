@@ -2,106 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>WebGL</title>
 </head>
-<body onload="drawSin()">
-<p>HELLO WORLD!</p><br/><br/><br/><br/><br/>
-<canvas height='300' width='400' id="tutorial"></canvas>
-<textarea id="test" style="height: 300px; width: 500px; overflow: hidden"></textarea>
-<div id="gl" height='300' width='400'></div>
-<canvas id="sin" height='200' width='300'></canvas>
-<a onclick="clickDownload(this)" download="rgb.csv" href="#">download</a>
-<!--a onclick="clickDownload(this)" download="audiofingerprint.csv" href="#">download</a -->
-<script type="text/javascript" src="audio-fingerprinting.js"></script>
-<script type="text/javascript" src="three/three.js"></script>
-<script type="text/javascript" src="canvas.js"></script>
-<script type="text/javascript" src="webgl/line.js"></script>
-<script>
-    function get_text_dimensions(font) {
-        h = document.getElementsByTagName("body")[0];
-        d = document.createElement("div");
-        s = document.createElement("span");
-
-        d.appendChild(s);
-        d.style.fontFamily = font;
-        s.style.fontFamily = font;
-        s.style.fontSize = "72px";
-        s.innerHTML = "font_detection";
-        h.appendChild(d);
-
-        var textWidth = s.offsetWidth;
-        var textHeight = s.offsetHeight;
-        //h.removeChild(d);//隐藏测试字体
-
-        return [textWidth, textHeight];
-    }
-
-    //测试默认字体
-    function judge_font(){
-        var rootFontFamily = (document.documentElement.currentStyle ? document.documentElement.currentStyle : window.getComputedStyle(document.documentElement)).fontFamily;
-        var fontsize = rootFontFamily + ":" + get_text_dimensions(rootFontFamily);
-        return fontsize;
-    }
-
-    //测试音频指纹
-    var audiofp = null;
-
-    //function clickDownload(aLink){
-    //    audioFingerprint.outputcsv(aLink);
-    //}
-
-    audioFingerprint.run(function (fp) {
-       audiofp = fp;
-       //document.getElementById('test').value = audiofp;
-    });
-
-    //计算机时钟信号差异
-    function cpu_time() {
-        //测试正则表达式
-        var time = ['1997-09-01','2019-4-8','2020-12-02','1000-23-100','01-21-33','105-23-01','1000-100-10','11-11-11','1-10-100','100-100-100','2019-1-1'];
-        var reg = new RegExp('^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)$');
-        var starttime = new Date();
-        for (var x = 0; x < 1000; x++){
-            for (let year in time){
-                reg.test(year);
-            }
-        }
-        var endtime = new Date();
-        var logtime = endtime - starttime;
-        alert(logtime);
-    }
-    //cpu_time();
-
-    //WebGL学习
-    function webgl() {
-        var scene = new THREE.Scene();
-        //相机开角，成像比例，相机能拍摄到的最近距离，相机能拍摄到的最远距离
-        var camera = new THREE.PerspectiveCamera(45,window.innerWidth/window.innerHeight,1,1000);
-        var renderer = new THREE.WebGLRenderer();
-        //最后渲染出来的大小，最好和相机第二个参数一致
-        renderer.setSize(window.innerWidth,window.innerHeight);
-
-        //添加一个立方体
-        var box = new THREE.Mesh(
-            new THREE.BoxGeometry(2,2,2),
-            new THREE.MeshBasicMaterial({
-                color:0xffff00
-            })
-        );
-
-        //将立方体放到原点位置
-        box.position.set(0,0,0);
-        scene.add(box);
-
-        //将相机放到立方体的斜上方，并对着立方体
-        camera.position.set(5,5,5);
-        camera.lookAt(box.position);
-
-        //渲染场景
-        document.getElementById('gl').appendChild(renderer.domElement);
-        renderer.render(scene,camera);
-    }
-    webgl();
-</script>
+<body>
+<div id="ball" width="200px" height="150px"></div>
+<canvas id="can1" width="200px" height="150px"></canvas>
+<!--a onclick="clickDownload(this)" download="rgb.csv" href="#">download</a--></br>
+总数：<input id="number">
+<div id="cube" width="600px" height="600px"></div>
+<canvas id="can2" width="600px" height="600px"></canvas>
+<!--a onclick="clickDownload(this)" download="rgb.csv" href="#">download</a--></br>
+总数：<input id="number2">
+<script language=javascript src='three/three.js'></script>
+<script type="text/javascript" src="sphere.js"></script>
+<script type="text/javascript" src="cube.js"></script>
 </body>
 </html>
