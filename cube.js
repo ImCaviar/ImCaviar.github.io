@@ -65,7 +65,6 @@ function drawCube() {
         //excel += '\n';
         var numr = 0;
         var numg = 0;
-        var numb = 0;
         for (var i=0; i<height; i++){
             for (var j=0; j<width; j++){
                 //excel += data[(i*300+j)*4].toString()+'\,'+data[(i*300+j)*4+1].toString()+'\,'+data[(i*300+j)*4+2].toString()+'\,'+data[(i*300+j)*4+3].toString()+'\,';
