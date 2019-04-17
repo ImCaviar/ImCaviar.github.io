@@ -5,35 +5,43 @@
     <title>WebGL</title>
 </head>
 <body>
-<div id="ball" width="200px" height="150px"></div>
+<div id="ball"></div>
 <canvas id="can1" width="200px" height="150px"></canvas>
 <!--a onclick="clickDownload(this)" download="rgb.csv" href="#">download</a--></br>
 总数：<input id="number">
-<div id="cube" width="400px" height="400px"></div>
+<div id="cube"></div>
 <canvas id="can2" width="400px" height="400px"></canvas>
 <!--a onclick="clickDownload(this)" download="rgb.csv" href="#">download</a--></br>
 R总数：<input id="number2R">
 G总数：<input id="number2G">
-<div id="texture" width="400px" height="400px"></div>
+<div id="texture"></div>
 <canvas id="can3" width="400px" height="400px"></canvas></br>
 R总数：<input id="number3R">
 G总数：<input id="number3G">
 B总数：<input id="number3B">
-<div id="transparent" width="400px" height="400px"></div>
+<div id="transparent"></div>
 <canvas id="can4" width="400px" height="400px"></canvas></br>
 R总数：<input id="number4R">
 G总数：<input id="number4G">
 B总数：<input id="number4B">
-<div id="multimodel" width="600px" height="400px"></div>
+<div id="multimodel"></div>
 <canvas id="can5" width="600px" height="400px"></canvas><br>
 R总数：<input id="number5R">
 G总数：<input id="number5G">
 B总数：<input id="number5B">
+<div id="frame"></div>
+<canvas id="can6" width="600px" height="400px"></canvas><br>
+帧数：<input id="number6">
+<div id="star"></div>
+帧数：<input id="number7">
 <script language=javascript src='three/three.js'></script>
+<script language=javascript src='stat/stats.js'></script>
 <script type="text/javascript" src="webgl/sphere.js"></script>
 <script type="text/javascript" src="webgl/cube.js"></script>
 <script type="text/javascript" src="webgl/texture.js"></script>
 <script type="text/javascript" src="webgl/transparent.js"></script>
-<script type="text/javascript" src="webgl/multimodel.js"></script>
+<script type="text/javascript" src="webglmultimodel.js"></script>
+<script type="text/javascript" src="webglframe.js"></script>
+<script type="text/javascript" src="webgl/starrrr.js"></script>
 </body>
 </html>
