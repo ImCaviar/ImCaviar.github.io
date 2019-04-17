@@ -84,10 +84,10 @@ function drawStar() {
             if (nowtime-pretime >= 5000 && flag == 0){
                 flag = 1;
                 frames = 0;//从5秒开始计时
-                console.log(flag);
+                //console.log(flag);
             }else if(nowtime-pretime >= 10000 && flag == 1){
                 flag = 2;
-                console.log(flag);
+                //console.log(flag);
                 countFrames();
             }
             earth.rotation.y += 0.003;
