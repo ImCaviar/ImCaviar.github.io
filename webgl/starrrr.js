@@ -40,7 +40,6 @@ function drawStar() {
     addLine([190,100,190],[250,200,250],0xffe7ba,0xfffff0);
     addLine([-500,100,-300],[-400,200,-200],0xEDEDED,0xE066FF);
     addLine([-500,90,-350],[-400,150,-250],0xffffff,0xB2DFEE);
-    addLine([-1300,150,1300],[-1100,0,1450],0xFF0000,0xffffff);
     //添加发光球体
     var spheregeometry = new THREE.SphereGeometry(100,100,100);
     var spherematerial = new THREE.MeshLambertMaterial({
@@ -81,7 +80,7 @@ function drawStar() {
         function render() {
             stat.update();
             frames ++;
-            var nowtime = new Date();//计算3秒-6秒的渲染帧数，因为趋于稳定
+            var nowtime = new Date();//计算2秒-10秒的渲染帧数，因为趋于稳定
             if (nowtime-pretime >= 2000 && flag == 0){
                 flag = 1;
                 frames = 0;//从3秒开始计时
@@ -92,12 +91,6 @@ function drawStar() {
                 countFrames();
             }
             earth.rotation.y += 0.003;
-            sphere.rotation.y +=0.001;
-            sphere.rotation.z -=0.0005;
-            sphere1.rotation.y +=0.001;
-            sphere1.rotation.z -=0.0005;
-            sphere2.rotation.y +=0.001;
-            sphere2.rotation.z -=0.0005;
             //让相机转动以此来实现整个场景的旋转
             camera.rotateY(0.001);
             requestAnimationFrame(render);
