@@ -75,19 +75,20 @@ function drawStar() {
         var earthgeometry = new THREE.SphereGeometry(100,50,50);
         var earthmaterial = new THREE.MeshStandardMaterial({map:texture});
         var earth = new THREE.Mesh(earthgeometry,earthmaterial);
+        earth.position.set(-100,0,0);
         scene.add(earth);
         var pretime = new Date();
         function render() {
             stat.update();
             frames ++;
             var nowtime = new Date();//计算3秒-6秒的渲染帧数，因为趋于稳定
-            if (nowtime-pretime >= 5000 && flag == 0){
+            if (nowtime-pretime >= 2000 && flag == 0){
                 flag = 1;
-                frames = 0;//从5秒开始计时
-                //console.log(flag);
+                frames = 0;//从3秒开始计时
+                console.log(flag);
             }else if(nowtime-pretime >= 10000 && flag == 1){
                 flag = 2;
-                //console.log(flag);
+                console.log(flag);
                 countFrames();
             }
             earth.rotation.y += 0.003;
@@ -98,7 +99,7 @@ function drawStar() {
             sphere2.rotation.y +=0.001;
             sphere2.rotation.z -=0.0005;
             //让相机转动以此来实现整个场景的旋转
-            camera.rotateY(0.01);
+            camera.rotateY(0.001);
             requestAnimationFrame(render);
             renderer.render(scene,camera);
         }
