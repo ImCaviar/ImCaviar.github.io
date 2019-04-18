@@ -70,7 +70,7 @@ function drawStar() {
     scene.add(sphere2);
     //添加地球
     var earthtl = new THREE.TextureLoader();
-    earthtl.load('webgl/earth.jpg',function (texture) {
+    earthtl.load('./webgl/earth.jpg',function (texture) {
         var earthgeometry = new THREE.SphereGeometry(100,50,50);
         var earthmaterial = new THREE.MeshStandardMaterial({map:texture});
         var earth = new THREE.Mesh(earthgeometry,earthmaterial);
