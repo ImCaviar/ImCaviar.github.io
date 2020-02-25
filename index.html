@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Language</title>
+</head>
+<body>
+<table> 
+<tr> 
+<td> 浏览器语言:</td> 
+<td> <input type="txt" id="l" size="110%"></td> 
+<td> 浏览器可用语言:</td> 
+<td> <input type="txt" id="ls" size="110%"></td> 
+</tr> 
+</table> 
+<script> 
+function whatBrowser() {  
+document.getElementById("l").value = navigator.language;
+document.getElementById("ls").value = navigator.languages;
+}  
+whatBrowser();
+</script> 
+</body>
+</html>
