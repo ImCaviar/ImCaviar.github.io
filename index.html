@@ -2,21 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Language</title>
+    <title>Platform</title>
 </head>
 <body>
 <table> 
 <tr> 
-<td> 浏览器语言:</td> 
-<td> <input type="txt" id="l" size="110%"></td> 
-<td> 浏览器可用语言:</td> 
-<td> <input type="txt" id="ls" size="110%"></td> 
+<td> 平台:</td> 
+<td> <input type="txt" id="p" size="110%"></td> 
 </tr> 
 </table> 
 <script> 
 function whatBrowser() {  
-document.getElementById("l").value = navigator.language;
-document.getElementById("ls").value = navigator.languages;
+document.getElementById("p").value = navigator.platform;
 }  
 whatBrowser();
 </script> 
